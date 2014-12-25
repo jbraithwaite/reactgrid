@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/jbraithwaite/reactgrid/issues"
   },
-  "homepage": "https://github.com/jbraithwaite/reactgrid"
+  "homepage": "https://github.com/jbraithwaite/reactgrid",
+  "dependencies": {
+    "underscore": "^1.7.0"
+  }
 }

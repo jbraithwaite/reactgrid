@@ -20,13 +20,14 @@ var Tbody = React.createClass({
       var items = [];
 
       _.each(allColumns, function(column, keyColumn){
-
-        var componentClass = Cells.Cell;
+        var componentClass = Cells.CellClass;
 
         if (column.cell && typeof column.cell === 'string'){
-          componentClass = Cells[column.cell.charAt(0).toUpperCase() + column.cell.slice(1) + 'Cell'];
+          var UpperCasedFirstLetter = column.cell.charAt(0).toUpperCase() + column.cell.slice(1);
+          componentClass = Cells[UpperCasedFirstLetter + 'CellClass'];
+        } else if (column.cell && typeof column.cell === 'function') {
+          componentClass = column.cell;
         }
-
         items.push(<componentClass model={model} column={column} key={keyColumn}/> );
       });
 

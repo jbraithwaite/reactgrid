@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var Th = require('./cell.jsx').HeaderCell;
+var Th = require('./cell.jsx').HeaderCellClass;
 var _ = require('underscore');
 
 var Thead = React.createClass({

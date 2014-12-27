@@ -13,7 +13,6 @@ var Table = React.createClass({
     };
   },
 
-
   propTypes: {
     hover: React.PropTypes.bool,
     striped: React.PropTypes.bool,

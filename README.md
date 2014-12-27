@@ -50,7 +50,8 @@ var actors = {[
 ## Todos
 
 - [X] Display content from a 'collection'
-- [ ] Cell types
+- [X] Cell types
 - [ ] Events
+- [ ] Tests
 - [ ] Plugins (moment-cell, paginator)
 - [ ] Feature parity with backgrid 

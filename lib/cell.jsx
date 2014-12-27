@@ -1,25 +1,33 @@
 /** @jsx React.DOM */
 
-var Formatter = require('./formatter.jsx');
-var _ = require('underscore');
+var _          = require('underscore');
+var Formatter  = require('./formatter.jsx');
+var Helpers    = require('./helpers.jsx');
+var extend     = Helpers.extend;
 var exportThis = {};
 
-// Cell mixin
-var CellMixin = exportThis.CellMixin = {
+var HeaderCell = exportThis.HeaderCell = {
+  render: function() {
+    return (<th>{this.props.children}</th>);
+  }
+};
 
+var Cell = exportThis.Cell = {
   getDefaultProps: function() {
     return {
       model: {},
-      field: ''
+      field: '',
+      tagName: (<td/>),
+      formatter: Formatter.CellFormatter,
+      className: 'cell',
     };
   },
-
-  formatter: Formatter.CellFormatter,
 
   formatterValue: function(){
     var model = this.props.model;
     var column = this.props.column;
 
+    if (!column || !model) return null;
     var rawData = model && model[column.name];
 
     if (rawData){
@@ -30,89 +38,52 @@ var CellMixin = exportThis.CellMixin = {
       // First check to see if the column has a formatter function
       if (column.formatter && typeof column.formatter === 'function'){
         CellFormatter = column.formatter;
-        formatter = new CellFormatter();
       }
       // Next check to see if the formatter is a string
       else if (column.formatter && typeof column.formatter === 'string'){
         CellFormatter = Formatter[column.formatter]
-        formatter = new CellFormatter();
       }
       // Next use the default formatter
-      else if (typeof this.formatter === 'string'){
-        CellFormatter = Formatter[this.formatter];
-        formatter = new CellFormatter();
+      else if (typeof this.props.formatter === 'string'){
+        CellFormatter = Formatter[this.props.formatter];
       } else {
-        console.log('hey', typeof this.formatter);
-        formatter = this.formatter
+        CellFormatter = this.props.formatter
       }
 
+      formatter = new CellFormatter(this.props.formatterOptions);
       value = formatter.fromRaw(rawData);
     }
 
-    if (column.cell && typeof column.cell === 'function'){
-      value = column.cell(model, column);
+    if (column.renderCell && typeof column.renderCell === 'function'){
+      value = column.renderCell(model, column);
     }
 
     return value;
-  }
+  },
 
+  render: function() {
+    var value = this.formatterValue();
+    return (<td className={this.props.className}>{value}</td>);
+  }
 };
 
-var HeaderCell = exportThis.HeaderCell = React.createClass({
-  render: function() {
-    return (<th>{this.props.children}</th>);
+var NumberCell = exportThis.NumberCell = {};
+
+_.extend(NumberCell, Cell, {
+  getDefaultProps: function() {
+    return {
+      model: {},
+      field: '',
+      tagName: (<td/>),
+      formatter: Formatter.NumberFormatter,
+      className: 'number-cell',
+    };
   }
 });
 
-
-var Cell = exportThis.Cell = React.createClass(_.extend(CellMixin,{
-  formatter: 'CellFormatter',
-  render: function() {
-    var value = this.formatterValue();
-    return (<td className="cell">{value}</td>);
-  }
-}));
-
-var NumberCell = exportThis.NumberCell = React.createClass(_.extend(CellMixin,{
-  formatter: Formatter.NumberFormatter,
-  render: function() {
-    var value = this.formatterValue();
-    return (<td className="number-cell">{value}</td>);
-  }
-}));
-
-var StringCell = exportThis.StringCell = React.createClass(_.extend(CellMixin,{
-  formatter: 'StringFormatter',
-  render: function() {
-    var value = this.formatterValue();
-    return (<td className="string-cell">{value}</td>);
-  }
-}));
-
-var EmailCell = exportThis.EmailCell = React.createClass(_.extend(CellMixin,{
-  formatter: 'EmailFormatter',
-  render: function() {
-    var value = this.formatterValue();
-    return (<td className="email-cell">{value}</td>);
-  }
-}));
-
-var SelectCell = exportThis.SelectCell = React.createClass(_.extend(CellMixin,{
-  formatter: 'SelectFormatter',
-  render: function() {
-    var value = this.formatterValue();
-    return (<td className="select-cell">{value}</td>);
-  }
-}));
-
-var DatetimeCell = exportThis.DatetimeCell = React.createClass(_.extend(CellMixin,{
-  formatter: 'DatetimeFormatter',
-  render: function() {
-    var value = this.formatterValue();
-    return (<td className="datetime-cell">{value}</td>);
-  }
-}));
-
-
+_.each(exportThis, function(singleCell, key){
+  exportThis[key].extend = extend;
+  exportThis[key + 'Class'] = React.createClass(singleCell);
+});
 
 module.exports = exportThis;

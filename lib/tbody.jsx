@@ -2,8 +2,9 @@
 
 var _ = require('underscore');
 
-var Cell = require('./cell.jsx');
-var Row = require('./row.jsx');
+var Cells = require('./cell.jsx');
+
+var Tr = require('./row.jsx');
 
 var Tbody = React.createClass({
   render : function(){
@@ -19,10 +20,17 @@ var Tbody = React.createClass({
       var items = [];
 
       _.each(allColumns, function(column, keyColumn){
-        items.push(<Cell model={model} column={column} key={keyColumn}/> );
+
+        var componentClass = Cells.Cell;
+
+        if (column.cell && typeof column.cell === 'string'){
+          componentClass = Cells[column.cell.charAt(0).toUpperCase() + column.cell.slice(1) + 'Cell'];
+        }
+
+        items.push(<componentClass model={model} column={column} key={keyColumn}/> );
       });
 
-      rows.push(<Row key={keyCollection}>{items}</Row>);
+      rows.push(<Tr key={keyCollection}>{items}</Tr>);
     });
 
     return (

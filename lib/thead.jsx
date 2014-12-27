@@ -1,14 +1,16 @@
 /** @jsx React.DOM */
 
+var Th = require('./cell.jsx').HeaderCell;
+var _ = require('underscore');
+
 var Thead = React.createClass({
 
   render: function(){
     var columns = [];
-    var allColumns = this.props.columns;
 
-    for (var key in allColumns) {
-      columns.push(<td key={key}>{allColumns[key].label}</td>);
-    }
+    _.each(this.props.columns, function(column, key){
+      columns.push(<Th key={key}>{column.label}</Th>);
+    });
 
     return (
       <thead>

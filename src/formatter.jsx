@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
-var _ = require('underscore');
+// Try catch because of an issue with browserify
+// https://github.com/paulmillr/exoskeleton/issues/60
+try { _ = require('underscore'); } catch(e) { };
 var Helpers = require('./helpers.jsx');
 var extend = Helpers.extend;
 var lpad = Helpers.lpad;
@@ -47,7 +49,6 @@ _.extend(NumberFormatter.prototype, {
 
     if (_.isNull(number) || _.isUndefined(number)) return '';
 
-    // ~~ same as Math.floor()
     number = number.toFixed(~~this.decimals);
 
     var parts = number.split('.');

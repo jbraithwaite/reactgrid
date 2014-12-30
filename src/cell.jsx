@@ -1,9 +1,11 @@
 /** @jsx React.DOM */
 
-var _          = require('underscore');
-var Formatter  = require('./formatter.jsx');
-var Helpers    = require('./helpers.jsx');
-var extend     = Helpers.extend;
+// Try catch because of an issue with browserify
+// https://github.com/paulmillr/exoskeleton/issues/60
+try { _ = require('underscore'); } catch(e) { };
+var Formatter = require('./formatter.jsx');
+var Helpers = require('./helpers.jsx');
+var extend = Helpers.extend;
 var exportThis = {};
 
 var HeaderCell = exportThis.HeaderCell = {
@@ -34,13 +36,12 @@ var Cell = exportThis.Cell = {
   },
 
   render: function() {
-
     // Make sure this.formatter is a usable function.
     this._updateFormatter();
 
     var model = this.props.model;
     var column = this.props.column;
-    var rawData = model && model[column.name];
+    var rawData = _.result(model, column.name);
 
     var value = this.formatter.fromRaw(rawData, this.props.model);
     return (<td className={this.props.className}>{value}</td>);
@@ -81,7 +82,7 @@ _.extend(NumberCell, Cell, {
 
     var model = this.props.model;
     var column = this.props.column;
-    var rawData = model && model[column.name];
+    var rawData = _.result(model, column.name);
 
     var value = this.formatter.fromRaw(rawData, this.props.model);
     return (<td className={this.props.className}>{value}</td>);
@@ -137,7 +138,7 @@ _.extend(UriCell, Cell, {
 
     var model = this.props.model;
     var column = this.props.column;
-    var rawData = model && model[column.name];
+    var rawData = _.result(model, column.name);
 
     var formattedValue = this.formatter.fromRaw(rawData, this.props.model);
     var title = this.state.title || formattedValue;
@@ -181,7 +182,7 @@ _.extend(EmailCell, StringCell, {
 
     var model = this.props.model;
     var column = this.props.column;
-    var rawData = model && model[column.name];
+    var rawData = _.result(model, column.name);
 
     var formattedValue = this.formatter.fromRaw(rawData, this.props.model);
 
@@ -283,7 +284,7 @@ _.extend(DatetimeCell, Cell, {
 
     var model = this.props.model;
     var column = this.props.column;
-    var rawData = model && model[column.name];
+    var rawData = _.result(model, column.name);
 
     var value = this.formatter.fromRaw(rawData, this.props.model);
     return (<td className={this.props.className}>{value}</td>);
@@ -361,13 +362,126 @@ _.extend(BooleanCell, Cell, {
 
     var model = this.props.model;
     var column = this.props.column;
-    var rawData = model && model[column.name];
+    var rawData = _.result(model, column.name);
 
     var formattedValue = this.formatter.fromRaw(rawData, this.props.model);
     var value = (
       <input type="checkbox" tabIndex="-1" checked={formattedValue} disabled={true}/>
     );
     return (<td className={this.props.className}>{value}</td>);
+  }
+});
+
+/**
+   SelectCell is also a different kind of cell in that upon going into edit mode
+   the cell renders a list of options to pick from, as opposed to an input box.
+
+   SelectCell cannot be referenced by its string name when used in a column
+   definition because it requires an `optionValues` class attribute to be
+   defined. `optionValues` can either be a list of name-value pairs, to be
+   rendered as options, or a list of object hashes which consist of a key *name*
+   which is the option group name, and a key *values* which is a list of
+   name-value pairs to be rendered as options under that option group.
+
+   In addition, `optionValues` can also be a parameter-less function that
+   returns one of the above. If the options are static, it is recommended the
+   returned values to be memoized. `_.memoize()` is a good function to help with
+   that.
+
+   During display mode, the default formatter will normalize the raw model value
+   to an array of values whether the raw model value is a scalar or an
+   array. Each value is compared with the `optionValues` values using
+   Ecmascript's implicit type conversion rules. When exiting edit mode, no type
+   conversion is performed when saving into the model. This behavior is not
+   always desirable when the value type is anything other than string. To
+   control type conversion on the client-side, you should subclass SelectCell to
+   provide a custom formatter or provide the formatter to your column
+   definition.
+
+   See:
+     [$.fn.val()](http://api.jquery.com/val/)
+
+   @class Backgrid.SelectCell
+   @extends Backgrid.Cell
+*/
+var SelectCell = exportThis.SelectCell = {};
+_.extend(SelectCell, Cell, {
+ getDefaultProps: function() {
+   return {
+     model: {},
+     column: {},
+     className: 'select-cell',
+     formatter: Formatter.SelectFormatter
+   };
+ },
+
+ getInitialState: function(){
+   return {
+     multiple: false,
+     optionValues: undefined,
+     delimiter: ', ',
+   }
+ },
+
+ render: function() {
+    // Make sure this.formatter is a usable function.
+    this._updateFormatter();
+
+    var model = this.props.model;
+    var column = this.props.column;
+    var modelData = _.result(model, column.name);
+    var value = '';
+
+    var rawData = this.formatter.fromRaw(modelData, this.props.model);
+
+    var optionValues = _.result(this.state, "optionValues");
+
+    var selectedText = [];
+
+    try {
+      if (!_.isArray(optionValues) || _.isEmpty(optionValues)) throw new TypeError;
+
+      for (var k = 0; k < rawData.length; k++) {
+        var rawDatum = rawData[k];
+
+        for (var i = 0; i < optionValues.length; i++) {
+          var optionValue = optionValues[i];
+
+          if (_.isArray(optionValue)) {
+            var optionText  = optionValue[0];
+            var optionValue = optionValue[1];
+
+            if (optionValue == rawDatum) selectedText.push(optionText);
+          }
+          else if (_.isObject(optionValue)) {
+            var optionGroupValues = optionValue.values;
+
+            for (var j = 0; j < optionGroupValues.length; j++) {
+              var optionGroupValue = optionGroupValues[j];
+              if (optionGroupValue[1] == rawDatum) {
+                selectedText.push(optionGroupValue[0]);
+              }
+            }
+          }
+          else {
+            throw new TypeError;
+          }
+        }
+      }
+
+      value = selectedText.join(this.delimiter);
+    }
+    catch (ex) {
+      if (ex instanceof TypeError) {
+        throw new TypeError("'optionValues' must be of type {Array.<Array>|Array.<{name: string, values: Array.<Array>}>}");
+      }
+      throw ex;
+    }
+
+    return (
+      <td className={this.props.className}>{value}</td>
+    );
+
   }
 });
 

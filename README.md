@@ -1,6 +1,12 @@
+
+
+
 # reactgrid
 
-Create tables with React. Inspirited by [backgrid.js](http://backgridjs.com/)
+Create tables with React. Completely inspirited by [backgrid.js](http://backgridjs.com/)
+
+## Dependencies
+- Underscore 
 
 ## WIP
 
@@ -9,49 +15,62 @@ Create tables with React. Inspirited by [backgrid.js](http://backgridjs.com/)
 ## Example Usage
 
 ```js
-var Table = require('reactgrid');
+var Reactgrid = require('reactgrid');
 
 var columns = [
   {
     label: 'ID',
-    name: 'id'
+    name: 'id',
+    cell: 'integer'
   },
   {
     label: 'Name',
-    name: 'name'
+    name: 'name',
+    cell: 'string'
   },
   {
     label: 'Created',
-    name: 'created'
+    name: 'created',
+    cell: 'datetime'
   },
   {
     label: 'Actions',
-    cell: function(model, column){
-    return (
-        <ButtonGroup>
-          <Button>Delete</Button>
-          <Button>Edit</Button>
-          <Button>View</Button>
-        </ButtonGroup>
-       );
-    }
+    cell: React.createClass(Reactgrid.Cell.Cell.extend({
+      getInitialState: function(){
+        return {
+          seconds: 0
+        }
+      },
+      componentDidMount : function(){
+        setInterval(function(){
+          this.setState({
+             seconds: this.state.seconds + 1
+          });
+        }.bind(this), 1000);
+      },
+     render : function(){
+       return (<td className={this.props.className}>{this.state.seconds} Seconds. Model ID: {this.props.model.id}</td>);
+     },
+   }))
   }
 ];
 
 var actors = {[
-    {id: 1, name: "James", created: "12-12-12"},
-    {id: 2, name: "Jill", created: "12-13-12"},
-    {id: 3, name: "Joe", created: "12-14-12"}
+    {id: 1, name: "James", created: "2014-12-29 09:30:30"},
+    {id: 2, name: "Jill", created: "2014-12-29 09:30:30"},
+    {id: 3, name: "Joe", created: "2014-12-29 09:30:30"}
 ]};
 
-<Table columns={columns} collection={actors}/>
+<Reactgrid.Table columns={columns} collection={actors}/>
 ```
+
+For a more thorough example, please see the demo
 
 ## Todos
 
-- [X] Display content from a 'collection'
 - [X] Cell types
+- [ ] Plugins / Extensions (moment-cell, paginator)
+- [ ] Make cells editable
 - [ ] Events
 - [ ] Tests
-- [ ] Plugins (moment-cell, paginator)
-- [ ] Feature parity with backgrid 
+- [ ] Complete feature parity with backgrid 

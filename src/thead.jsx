@@ -1,7 +1,9 @@
 /** @jsx React.DOM */
 
+// Try catch because of an issue with browserify
+// https://github.com/paulmillr/exoskeleton/issues/60
+try { _ = require('underscore'); } catch(e) { };
 var Th = require('./cell.jsx').HeaderCellClass;
-var _ = require('underscore');
 
 var Thead = React.createClass({
 

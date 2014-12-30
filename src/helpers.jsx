@@ -1,7 +1,10 @@
-var _ = require('underscore');
-var exportThis = {};
+/** @jsx React.DOM */
 
-exportThis.lpad = function lpad(str, length, padstr) {
+// Try catch because of an issue with browserify
+// https://github.com/paulmillr/exoskeleton/issues/60
+try { _ = require('underscore'); } catch(e) { };
+
+exports.lpad = function lpad(str, length, padstr) {
   var paddingLen = length - (str + '').length;
   paddingLen =  paddingLen < 0 ? 0 : paddingLen;
   var padding = '';
@@ -11,12 +14,7 @@ exportThis.lpad = function lpad(str, length, padstr) {
   return padding + str;
 }
 
-// Extend taken from Backbone.js
-// (c) 2010-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-// Backbone may be freely distributed under the MIT license.
-// For all details and documentation:
-// http://backbonejs.org
-exportThis.extend = function(staticProps, protoProps) {
+exports.extend = function(staticProps, protoProps) {
   var parent = this;
   var child = {};
 
@@ -30,4 +28,3 @@ exportThis.extend = function(staticProps, protoProps) {
   return child;
 };
 
-module.exports = exportThis;

@@ -1,8 +1,8 @@
 {
   "name": "reactgrid",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Tables for React",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,5 +23,18 @@
   "homepage": "https://github.com/jbraithwaite/reactgrid",
   "dependencies": {
     "underscore": "^1.7.0"
+  },
+  "devDependencies": {
+    "browserify": "^8.0.2",
+    "gulp": "^3.8.10",
+    "gulp-header": "^1.2.2",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-notify": "^2.1.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglifyjs": "^0.5.0",
+    "gutil": "^1.5.5",
+    "reactify": "^0.17.1",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^2.2.1"
   }
 }

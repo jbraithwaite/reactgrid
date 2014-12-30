@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Grid Demo</title>
+
+    <!-- Used to style this page (not required)-->
+    <link rel="stylesheet" type="text/css" href="http://getskeleton.com/dist/css/skeleton.css"/>
+
+    <style type="text/css">
+      body {
+        font: 14px/21px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+    </style>
+
+    <!-- Be sure to include the stylesheet reactgrid.css -->
+    <link rel="stylesheet" type="text/css" href="../dist/reactgrid.css"/>
+
+    <!-- React is a dependacy of Reactgrid -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.js"></script>
+
+    <!-- Underscore is a dependancy of Reactgrid -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
+    <!-- Reactgrid -->
+    <script src="../dist/reactgrid.js"></script>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="column" style="margin-top: 100px;">
+          <h4>Reactgrid</h4>
+          <div id="demo" class="reactgrid-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // The table's data
+      var collection = [
+        {
+          // integer
+          id: 1,
+
+          // string
+          name: "Please Please Me",
+
+          // date
+          recorded: "1933-05-03",
+
+          // datetime
+          released: (new Date).toISOString(),
+
+          // time
+          length: "00:32:45",
+
+          // number
+          price: 12.9,
+
+          // percent
+          rating: 95,
+
+          // boolean
+          lp: true,
+
+          // select
+          genre: [1,2,3,4],
+
+          // url
+          url: "http://www.thebeatles.com/album/please-please-me",
+
+          // email
+          email: "george@beatles.com",
+
+          // Custom
+          stars: 5
+        }, {
+          id: 2,
+          name: "With the Beatles",
+          recorded: "1963-10-23",
+          released: "1963-11-22 08:30:00",
+          length: "00:32:24",
+          price: 10.9,
+          rating: 92,
+          lp: true,
+          genre: [1,2,3],
+          url: "http://www.thebeatles.com/album/beatles",
+          email: "lennon@beatles.com",
+          stars: 4
+        }, {
+          id: 3,
+          name: "A Hard Day's Night",
+          recorded: "1964-06-24",
+          released: "1964-07-10 09:30:00",
+          length: "00:30:13",
+          price: 10.50,
+          rating: 90,
+          lp: true,
+          genre: [4,3],
+          url: "http://www.thebeatles.com/album/hard-days-night",
+          email: "mccartney@beatles.com",
+          stars: 4.5
+        }, {
+          id: 4,
+          name: "Beatles for Sale",
+          recorded: "1964-10-26",
+          released: "1965-04-06 08:00:00",
+          length: "00:08:44",
+          price: 12,
+          rating: 88,
+          lp: false,
+          genre: [1,2],
+          url: "http://www.thebeatles.com/album/beatles-for-sale",
+          email: "lennon@beatles.com",
+          stars: 4
+        }, {
+          id: 5,
+          name: "Help!",
+          recorded: "1965-07-17",
+          released: "1965-08-06 10:00:00",
+          length: "00:34:20",
+          price: 10.9,
+          rating: 95,
+          lp: true,
+          genre: [1,2,5],
+          url: "http://www.thebeatles.com/album/help",
+          email: "harrison@beatles.com",
+          stars: 5
+        }, {
+          id: 6,
+          name: "Rubber Soul",
+          recorded: "1965-11-11",
+          released: "1965-12-03 06:30:00",
+          length: "00:35:50",
+          price: 11.11,
+          rating: 97,
+          lp: true,
+          genre: [3],
+          url: "http://www.thebeatles.com/album/rubber-soul",
+          email: "mccartney@beatles.com",
+          stars: 4.3
+        }, {
+          id: 7,
+          name: "Revolver",
+          recorded: "1966-06-23",
+          released: "1966-10-05 10:30:00",
+          length: "00:35:32",
+          price: 9,
+          rating: 100,
+          lp: true,
+          genre: [1,2,3,4],
+          url: "http://www.thebeatles.com/album/revolver",
+          email: "lennon@beatles.com",
+          stars: 5
+        }
+      ];
+
+      // The table's columns
+      var columns = [
+        {
+          name: "id",
+          label: "ID (IntegerCell)",
+          cell: "integer"
+        }, {
+          name: "name",
+          label: "Name (StringCell)",
+          cell: "string"
+        }, {
+          name: "recorded",
+          label: "Recorded (DateCell)",
+          cell: "date"
+        }, {
+          name: "released",
+          label: "Released (DatetTmeCell)",
+          cell: "datetime"
+        }, {
+          name: "length",
+          label: "Length (TimeCell Ext.)",
+          cell: React.createClass(Reactgrid.Cell.TimeCell.extend({
+            componentWillMount : function(){
+              this.setState({
+                includeMilli: true
+              });
+            },
+          }))
+        }, {
+          name: "price",
+          label: "Price (NumberCell)",
+          cell: "number"
+        }, {
+          name: "rating",
+          label: "Rating (PercentCell)",
+          cell: "percent"
+        }, {
+          name: "lp",
+          label: "LP (BooleanCell)",
+          cell: "boolean"
+        }, {
+          name: "genre",
+          label: "Genre(s) (SelectCell)",
+          cell: React.createClass(Reactgrid.Cell.SelectCell.extend({
+            componentWillMount : function(){
+              this.setState({
+                optionValues: [["Rock & Roll", 1], ["Rock", 2], ["Pop",3], ["Merseybeat", 4], ["Folk Rock", 5]]
+              });
+            },
+          }))
+        }, {
+          name: "url",
+          label: "URL (UriCell)",
+          cell: "uri"
+        }, {
+          name: "email",
+          label: "Email (EmailCell)",
+          cell: "email"
+        }, {
+        }, {
+          label: "Custom Cell",
+          cell: React.createClass(Reactgrid.Cell.Cell.extend({
+            getInitialState: function(){
+              return {
+                seconds: 0
+              };
+            },
+            componentDidMount : function(){
+              setInterval(function(){
+                this.setState({
+                   seconds: this.state.seconds + 1
+                });
+              }.bind(this), 1000);
+            },
+           render : function(){
+             return (React.createElement("td", {className: this.props.className}, this.state.seconds, " Seconds. Model Data (star): ", this.props.model.stars));
+           },
+         }))
+        }
+      ];
+
+      React.render(React.createElement(Reactgrid.Table, {className: "table reactgrid", columns: columns, collection: collection}), document.getElementById('demo'));
+    </script>
+  </body>
+</html>

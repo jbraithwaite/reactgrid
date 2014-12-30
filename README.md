@@ -3,9 +3,10 @@
 
 # reactgrid
 
-Create tables with React. Completely inspirited by [backgrid.js](http://backgridjs.com/)
+Create tables with React. Completely inspired by [backgrid.js](http://backgridjs.com/)
 
 ## Dependencies
+- React 
 - Underscore 
 
 ## WIP
@@ -14,7 +15,12 @@ Create tables with React. Completely inspirited by [backgrid.js](http://backgrid
 
 ## Example Usage
 
+Server side:
+
 ```js
+/** @jsx React.DOM */
+
+var React = require('react');
 var Reactgrid = require('reactgrid');
 
 var columns = [
@@ -64,7 +70,22 @@ var actors = {[
 <Reactgrid.Table columns={columns} collection={actors}/>
 ```
 
-For a more thorough example, please see the demo
+For a client side example, please see the demo
+
+## For Developers
+
+Have node installed
+
+```
+  npm install
+
+  # Default build: Minifies CSS, Translates JSX -> JS, Browserify
+  gulp 
+
+  # Use for development of Reactgrid, same as default but with Watchify
+  gulp dev
+
+```
 
 ## Todos
 

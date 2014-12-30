@@ -91,7 +91,7 @@ Have node installed
 
 - [X] Cell types
 - [ ] Plugins / Extensions (moment-cell, paginator)
-- [ ] Make cells editable
-- [ ] Events
-- [ ] Tests
+- [ ] Make cells editable 
+- [ ] Events using [fluxxor](http://fluxxor.com/)
+- [ ] Tests in [Jest](http://facebook.github.io/jest/)
 - [ ] Complete feature parity with backgrid 

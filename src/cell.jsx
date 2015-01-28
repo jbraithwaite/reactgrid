@@ -487,7 +487,10 @@ _.extend(SelectCell, Cell, {
 
 _.each(exportThis, function(singleCell, key){
   exportThis[key].extend = extend;
-  exportThis[key + 'Class'] = React.createClass(singleCell);
+
+  // Make sure each class has a displayName
+  // This was causing issues with Webpack
+  exportThis[key + 'Class'] = React.createClass(_.extend({},singleCell,{displayName: key + 'Class' }));
 });
 
 module.exports = exportThis;

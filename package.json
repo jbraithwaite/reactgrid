@@ -21,11 +21,9 @@
     "url": "https://github.com/jbraithwaite/reactgrid/issues"
   },
   "homepage": "https://github.com/jbraithwaite/reactgrid",
-  "peerDependencies": {
-    "react": "^0.13.1"
-  },
   "dependencies": {
-    "underscore": "^1.8.2"
+    "underscore": "^1.8.2",
+    "react": "^0.13.1"
   },
   "devDependencies": {
     "gulp": "^3.8.11",

@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var React = require('React');
+var React = require('react');
 var Cells = require('./cell.js');
 var Tr = require('./row.js');
 

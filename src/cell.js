@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var React = require('React');
+var React = require('react');
 var Formatter = require('./formatter.js');
 var Helpers = require('./helpers.js');
 var extend = Helpers.extend;

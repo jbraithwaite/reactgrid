@@ -22,7 +22,7 @@ gulp.task('react:compile', function(callback) {
         filename: buildDir + '/' + package.name + '.js'
       },
       externals: {
-        React: 'React',
+        react: 'React',
         underscore: '_'
       }
     }, function(err, stats) {

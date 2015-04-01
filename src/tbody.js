@@ -1,6 +1,6 @@
 var _ = require('underscore');
-var Tr = require('./row.js');
-var Cells = require('./cell.js');
+var Tr = require('./row');
+var Cells = require('./cells');
 var React = require('react');
 
 var Tbody = React.createClass({displayName: "Tbody",

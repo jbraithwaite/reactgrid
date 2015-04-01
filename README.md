@@ -40,7 +40,7 @@ var columns = [
   },
   {
     label: 'Actions',
-    cell: React.createClass(Reactgrid.Cell.Cell.extend({
+    cell: React.createClass(Reactgrid.Cells.Cell.extend({
       getInitialState: function(){
         return {
           seconds: 0

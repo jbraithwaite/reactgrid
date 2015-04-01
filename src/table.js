@@ -1,6 +1,6 @@
 var React = require('react');
-var Thead = require('./thead.js');
-var Tbody = require('./tbody.js');
+var Thead = require('./thead');
+var Tbody = require('./tbody');
 
 var Table = React.createClass({displayName: "Table",
   getDefaultProps: function() {

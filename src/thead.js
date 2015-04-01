@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var Th = require('./cell.js').HeaderCellClass;
+var Th = require('./cells').HeaderCellClass;
 var React = require('react');
 
 var Thead = React.createClass({displayName: "Thead",

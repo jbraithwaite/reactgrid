@@ -48,7 +48,7 @@ var Reactgrid =
 	module.exports = {
 	  Table: __webpack_require__(1),
 	  Formatter: __webpack_require__(2),
-	  Cell: __webpack_require__(3)
+	  Cells: __webpack_require__(3)
 	};
 
 
@@ -61,7 +61,6 @@ var Reactgrid =
 	var Tbody = __webpack_require__(7);
 
 	var Table = React.createClass({displayName: "Table",
-
 	  getDefaultProps: function() {
 	    return {
 	      columns: []
@@ -69,7 +68,6 @@ var Reactgrid =
 	  },
 
 	  render: function() {
-
 	    var table = (
 	      React.createElement("table", {className: this.props.className},
 	        React.createElement(Thead, {columns: this.props.columns}),
@@ -86,7 +84,6 @@ var Reactgrid =
 	    } else {
 	      return table;
 	    }
-
 	  }
 	});
 
@@ -99,9 +96,9 @@ var Reactgrid =
 
 	var _ = __webpack_require__(5);
 	var Helpers = __webpack_require__(8);
-	var extend = Helpers.extend;
-	var lpad = Helpers.lpad;
 
+	var lpad = Helpers.lpad;
+	var extend = Helpers.extend;
 	var exportThis = {};
 
 	// Cell
@@ -355,9 +352,9 @@ var Reactgrid =
 
 	var _ = __webpack_require__(5);
 	var React = __webpack_require__(4);
-	var Formatter = __webpack_require__(2);
 	var Helpers = __webpack_require__(8);
 	var extend = Helpers.extend;
+	var Formatter = __webpack_require__(2);
 	var exportThis = {};
 
 	var HeaderCell = exportThis.HeaderCell = {
@@ -421,7 +418,7 @@ var Reactgrid =
 	      decimals: Formatter.NumberFormatter.prototype.defaults.decimals,
 	      decimalSeparator: Formatter.NumberFormatter.prototype.defaults.decimalSeparator,
 	      orderSeparator: Formatter.NumberFormatter.prototype.defaults.orderSeparator
-	    }
+	    };
 	  },
 
 	  render: function() {
@@ -481,7 +478,7 @@ var Reactgrid =
 	    return {
 	      title: null,
 	      target: "_blank"
-	    }
+	    };
 	  },
 
 	  render: function() {
@@ -573,7 +570,7 @@ var Reactgrid =
 	      decimals: 0,
 	      decimalSeparator: Formatter.NumberFormatter.prototype.defaults.decimalSeparator,
 	      orderSeparator: Formatter.NumberFormatter.prototype.defaults.orderSeparator
-	    }
+	    };
 	  },
 	});
 
@@ -623,7 +620,7 @@ var Reactgrid =
 	     includeDate: Formatter.DatetimeFormatter.prototype.defaults.includeDate,
 	     includeTime: Formatter.DatetimeFormatter.prototype.defaults.includeTime,
 	     includeMilli: Formatter.DatetimeFormatter.prototype.defaults.includeMilli,
-	   }
+	   };
 	  },
 
 	  render: function() {
@@ -663,7 +660,7 @@ var Reactgrid =
 	     includeDate: Formatter.DatetimeFormatter.prototype.defaults.includeDate,
 	     includeTime: false,
 	     includeMilli: Formatter.DatetimeFormatter.prototype.defaults.includeMilli,
-	   }
+	   };
 	 }
 	});
 
@@ -689,7 +686,7 @@ var Reactgrid =
 	     includeDate: false,
 	     includeTime: Formatter.DatetimeFormatter.prototype.defaults.includeTime,
 	     includeMilli: Formatter.DatetimeFormatter.prototype.defaults.includeMilli,
-	   }
+	   };
 	 }
 	});
 
@@ -772,7 +769,7 @@ var Reactgrid =
 	     multiple: false,
 	     optionValues: undefined,
 	     delimiter: ', ',
-	   }
+	   };
 	 },
 
 	 render: function() {
@@ -865,8 +862,8 @@ var Reactgrid =
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(5);
-	var React = __webpack_require__(4);
 	var Th = __webpack_require__(3).HeaderCellClass;
+	var React = __webpack_require__(4);
 
 	var Thead = React.createClass({displayName: "Thead",
 
@@ -895,16 +892,14 @@ var Reactgrid =
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(5);
-	var React = __webpack_require__(4);
-	var Cells = __webpack_require__(3);
 	var Tr = __webpack_require__(9);
+	var Cells = __webpack_require__(3);
+	var React = __webpack_require__(4);
 
 	var Tbody = React.createClass({displayName: "Tbody",
 	  render : function(){
-
 	    var allColumns = this.props.columns;
 	    var collection = this.props.collection;
-
 	    var rows = [];
 
 	    if (_.isEmpty(collection)) return (React.createElement("tbody", null));
@@ -980,16 +975,13 @@ var Reactgrid =
 	var React = __webpack_require__(4);
 
 	var Row = React.createClass({displayName: "Row",
-
 	  render: function() {
-
 	    return (
 	      React.createElement("tr", null,
 	        this.props.children
 	      )
 	    );
 	  }
-
 	});
 
 	module.exports = Row;

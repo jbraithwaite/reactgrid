@@ -1,8 +1,8 @@
 var _ = require('underscore');
 var React = require('react');
+var Helpers = require('./helpers');
 var extend = Helpers.extend;
-var Helpers = require('./helpers.js');
-var Formatter = require('./formatter.js');
+var Formatter = require('./formatter');
 var exportThis = {};
 
 var HeaderCell = exportThis.HeaderCell = {

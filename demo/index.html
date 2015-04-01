@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="../dist/reactgrid.css"/>
 
     <!-- React is a dependacy of Reactgrid -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.1/react.js"></script>
 
     <!-- Underscore is a dependancy of Reactgrid -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
@@ -49,7 +49,7 @@
           recorded: "1933-05-03",
 
           // datetime
-          released: (new Date).toISOString(),
+          released: (new Date()).toISOString(),
 
           // time
           length: "00:32:45",
@@ -176,7 +176,7 @@
         }, {
           name: "length",
           label: "Length (TimeCell Ext.)",
-          cell: React.createClass(Reactgrid.Cell.TimeCell.extend({
+          cell: React.createClass(Reactgrid.Cells.TimeCell.extend({
             componentWillMount : function(){
               this.setState({
                 includeMilli: true
@@ -198,7 +198,7 @@
         }, {
           name: "genre",
           label: "Genre(s) (SelectCell)",
-          cell: React.createClass(Reactgrid.Cell.SelectCell.extend({
+          cell: React.createClass(Reactgrid.Cells.SelectCell.extend({
             componentWillMount : function(){
               this.setState({
                 optionValues: [["Rock & Roll", 1], ["Rock", 2], ["Pop",3], ["Merseybeat", 4], ["Folk Rock", 5]]
@@ -216,7 +216,7 @@
         }, {
         }, {
           label: "Custom Cell",
-          cell: React.createClass(Reactgrid.Cell.Cell.extend({
+          cell: React.createClass(Reactgrid.Cells.Cell.extend({
             getInitialState: function(){
               return {
                 seconds: 0

@@ -1,16 +1,13 @@
-/** @jsx React.DOM */
-
-// Try catch because of an issue with browserify
-// https://github.com/paulmillr/exoskeleton/issues/60
-try { _ = require('underscore'); } catch(e) { };
-var Formatter = require('./formatter.jsx');
-var Helpers = require('./helpers.jsx');
+var _ = require('underscore');
+var React = require('React');
+var Formatter = require('./formatter.js');
+var Helpers = require('./helpers.js');
 var extend = Helpers.extend;
 var exportThis = {};
 
 var HeaderCell = exportThis.HeaderCell = {
   render: function() {
-    return (<th>{this.props.children}</th>);
+    return (React.createElement("th", null, this.props.children));
   }
 };
 
@@ -44,7 +41,7 @@ var Cell = exportThis.Cell = {
     var rawData = _.result(model, column.name);
 
     var value = this.formatter.fromRaw(rawData, this.props.model);
-    return (<td className={this.props.className}>{value}</td>);
+    return (React.createElement("td", {className: this.props.className}, value));
   }
 };
 
@@ -85,7 +82,7 @@ _.extend(NumberCell, Cell, {
     var rawData = _.result(model, column.name);
 
     var value = this.formatter.fromRaw(rawData, this.props.model);
-    return (<td className={this.props.className}>{value}</td>);
+    return (React.createElement("td", {className: this.props.className}, value));
   }
 });
 
@@ -144,16 +141,16 @@ _.extend(UriCell, Cell, {
     var title = this.state.title || formattedValue;
 
     var value = (
-      <a
-        href={formattedValue}
-        title={title}
-        target={this.state.target}
-        tabIndex="-1">
-        {formattedValue}
-      </a>
+      React.createElement("a", {
+        href: formattedValue,
+        title: title,
+        target: this.state.target,
+        tabIndex: "-1"},
+        formattedValue
+      )
     );
 
-    return (<td className={this.props.className}>{value}</td>);
+    return (React.createElement("td", {className: this.props.className}, value));
   }
 
 });
@@ -187,15 +184,15 @@ _.extend(EmailCell, StringCell, {
     var formattedValue = this.formatter.fromRaw(rawData, this.props.model);
 
     var value = (
-      <a
-        href={'mailto:'+formattedValue}
-        title={formattedValue}
-        tabIndex="-1">
-        {formattedValue}
-      </a>
+      React.createElement("a", {
+        href: 'mailto:'+formattedValue,
+        title: formattedValue,
+        tabIndex: "-1"},
+        formattedValue
+      )
     );
 
-    return (<td className={this.props.className}>{value}</td>);
+    return (React.createElement("td", {className: this.props.className}, value));
   }
 });
 
@@ -287,7 +284,7 @@ _.extend(DatetimeCell, Cell, {
     var rawData = _.result(model, column.name);
 
     var value = this.formatter.fromRaw(rawData, this.props.model);
-    return (<td className={this.props.className}>{value}</td>);
+    return (React.createElement("td", {className: this.props.className}, value));
   }
 
 });
@@ -366,9 +363,9 @@ _.extend(BooleanCell, Cell, {
 
     var formattedValue = this.formatter.fromRaw(rawData, this.props.model);
     var value = (
-      <input type="checkbox" tabIndex="-1" checked={formattedValue} disabled={true}/>
+      React.createElement("input", {type: "checkbox", tabIndex: "-1", checked: formattedValue, disabled: true})
     );
-    return (<td className={this.props.className}>{value}</td>);
+    return (React.createElement("td", {className: this.props.className}, value));
   }
 });
 
@@ -479,7 +476,7 @@ _.extend(SelectCell, Cell, {
     }
 
     return (
-      <td className={this.props.className}>{value}</td>
+      React.createElement("td", {className: this.props.className}, value)
     );
 
   }

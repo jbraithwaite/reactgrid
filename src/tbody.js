@@ -1,12 +1,9 @@
-/** @jsx React.DOM */
+var _ = require('underscore');
+var React = require('React');
+var Cells = require('./cell.js');
+var Tr = require('./row.js');
 
-// Try catch because of an issue with browserify
-// https://github.com/paulmillr/exoskeleton/issues/60
-try { _ = require('underscore'); } catch(e) { };
-var Cells = require('./cell.jsx');
-var Tr = require('./row.jsx');
-
-var Tbody = React.createClass({
+var Tbody = React.createClass({displayName: "Tbody",
   render : function(){
 
     var allColumns = this.props.columns;
@@ -14,7 +11,7 @@ var Tbody = React.createClass({
 
     var rows = [];
 
-    if (_.isEmpty(collection)) return (<tbody></tbody>);
+    if (_.isEmpty(collection)) return (React.createElement("tbody", null));
 
     _.each(collection, function(model, keyCollection){
       var items = [];
@@ -31,16 +28,16 @@ var Tbody = React.createClass({
         } else if (column.cell && typeof column.cell === 'function') {
           ComponentClass = column.cell;
         }
-        items.push(<ComponentClass model={model} column={column} key={keyColumn}/> );
+        items.push(React.createElement(ComponentClass, {model: model, column: column, key: keyColumn}) );
       });
 
-      rows.push(<Tr key={keyCollection}>{items}</Tr>);
+      rows.push(React.createElement(Tr, {key: keyCollection}, items));
     });
 
     return (
-      <tbody>
-        {rows}
-      </tbody>
+      React.createElement("tbody", null,
+        rows
+      )
     );
   }
 });

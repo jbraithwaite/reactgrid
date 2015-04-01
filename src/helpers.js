@@ -1,8 +1,4 @@
-/** @jsx React.DOM */
-
-// Try catch because of an issue with browserify
-// https://github.com/paulmillr/exoskeleton/issues/60
-try { _ = require('underscore'); } catch(e) { };
+_ = require('underscore');
 
 exports.lpad = function lpad(str, length, padstr) {
   var paddingLen = length - (str + '').length;
@@ -12,7 +8,7 @@ exports.lpad = function lpad(str, length, padstr) {
     padding = padding + padstr;
   }
   return padding + str;
-}
+};
 
 exports.extend = function(staticProps, protoProps) {
   var parent = this;

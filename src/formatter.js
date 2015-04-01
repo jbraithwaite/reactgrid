@@ -1,9 +1,5 @@
-/** @jsx React.DOM */
-
-// Try catch because of an issue with browserify
-// https://github.com/paulmillr/exoskeleton/issues/60
-try { _ = require('underscore'); } catch(e) { };
-var Helpers = require('./helpers.jsx');
+var _ = require('underscore');
+var Helpers = require('./helpers.js');
 var extend = Helpers.extend;
 var lpad = Helpers.lpad;
 

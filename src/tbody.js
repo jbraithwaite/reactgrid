@@ -1,14 +1,12 @@
 var _ = require('underscore');
-var React = require('react');
-var Cells = require('./cell.js');
 var Tr = require('./row.js');
+var Cells = require('./cell.js');
+var React = require('react');
 
 var Tbody = React.createClass({displayName: "Tbody",
   render : function(){
-
     var allColumns = this.props.columns;
     var collection = this.props.collection;
-
     var rows = [];
 
     if (_.isEmpty(collection)) return (React.createElement("tbody", null));

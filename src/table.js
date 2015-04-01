@@ -3,7 +3,6 @@ var Thead = require('./thead.js');
 var Tbody = require('./tbody.js');
 
 var Table = React.createClass({displayName: "Table",
-
   getDefaultProps: function() {
     return {
       columns: []
@@ -11,7 +10,6 @@ var Table = React.createClass({displayName: "Table",
   },
 
   render: function() {
-
     var table = (
       React.createElement("table", {className: this.props.className},
         React.createElement(Thead, {columns: this.props.columns}),
@@ -28,7 +26,6 @@ var Table = React.createClass({displayName: "Table",
     } else {
       return table;
     }
-
   }
 });
 

@@ -48,9 +48,11 @@ var columns = [
       },
       componentDidMount : function(){
         setInterval(function(){
-          this.setState({
-             seconds: this.state.seconds + 1
-          });
+          if (this.isMounted()){
+            this.setState({
+               seconds: this.state.seconds + 1
+            });
+          }
         }.bind(this), 1000);
       },
      render : function(){
@@ -73,12 +75,9 @@ For a client side example, please see the demo
 
 ## For Developers
 
-Have node installed
-
 ```
   npm install
   gulp 
-
 ```
 
 ## Todos
@@ -86,6 +85,5 @@ Have node installed
 - [X] Cell types
 - [ ] Plugins / Extensions (moment-cell, paginator)
 - [ ] Make cells editable 
-- [ ] Events using [fluxxor](http://fluxxor.com/)
 - [ ] Tests in [Jest](http://facebook.github.io/jest/)
 - [ ] Complete feature parity with backgrid 

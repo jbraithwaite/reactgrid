@@ -1,8 +1,8 @@
 var _ = require('underscore');
 var React = require('react');
-var Formatter = require('./formatter.js');
-var Helpers = require('./helpers.js');
 var extend = Helpers.extend;
+var Helpers = require('./helpers.js');
+var Formatter = require('./formatter.js');
 var exportThis = {};
 
 var HeaderCell = exportThis.HeaderCell = {
@@ -66,7 +66,7 @@ _.extend(NumberCell, Cell, {
       decimals: Formatter.NumberFormatter.prototype.defaults.decimals,
       decimalSeparator: Formatter.NumberFormatter.prototype.defaults.decimalSeparator,
       orderSeparator: Formatter.NumberFormatter.prototype.defaults.orderSeparator
-    }
+    };
   },
 
   render: function() {
@@ -126,7 +126,7 @@ _.extend(UriCell, Cell, {
     return {
       title: null,
       target: "_blank"
-    }
+    };
   },
 
   render: function() {
@@ -218,7 +218,7 @@ _.extend(IntegerCell, NumberCell, {
       decimals: 0,
       decimalSeparator: Formatter.NumberFormatter.prototype.defaults.decimalSeparator,
       orderSeparator: Formatter.NumberFormatter.prototype.defaults.orderSeparator
-    }
+    };
   },
 });
 
@@ -268,7 +268,7 @@ _.extend(DatetimeCell, Cell, {
      includeDate: Formatter.DatetimeFormatter.prototype.defaults.includeDate,
      includeTime: Formatter.DatetimeFormatter.prototype.defaults.includeTime,
      includeMilli: Formatter.DatetimeFormatter.prototype.defaults.includeMilli,
-   }
+   };
   },
 
   render: function() {
@@ -308,7 +308,7 @@ _.extend(DateCell, DatetimeCell, {
      includeDate: Formatter.DatetimeFormatter.prototype.defaults.includeDate,
      includeTime: false,
      includeMilli: Formatter.DatetimeFormatter.prototype.defaults.includeMilli,
-   }
+   };
  }
 });
 
@@ -334,7 +334,7 @@ _.extend(TimeCell, DatetimeCell, {
      includeDate: false,
      includeTime: Formatter.DatetimeFormatter.prototype.defaults.includeTime,
      includeMilli: Formatter.DatetimeFormatter.prototype.defaults.includeMilli,
-   }
+   };
  }
 });
 
@@ -417,7 +417,7 @@ _.extend(SelectCell, Cell, {
      multiple: false,
      optionValues: undefined,
      delimiter: ', ',
-   }
+   };
  },
 
  render: function() {

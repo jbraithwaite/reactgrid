@@ -1,7 +1,7 @@
 var _ = require('underscore');
-var Helpers = require('./helpers.js');
-var extend = Helpers.extend;
 var lpad = Helpers.lpad;
+var extend = Helpers.extend;
+var Helpers = require('./helpers.js');
 
 var exportThis = {};
 
